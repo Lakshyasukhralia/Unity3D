@@ -9,6 +9,8 @@ public class PlayerController : NetworkBehaviour {
     public Camera LocalCam;
     public bool CanJump;
     public Rigidbody player;
+    public Transform gun;
+    
     
   
   
@@ -16,6 +18,8 @@ public class PlayerController : NetworkBehaviour {
     // Use this for initialization
     void Start () {
         player = GetComponent<Rigidbody>();
+        gun = transform.Find("Gun");
+       
     }
 
 
@@ -46,8 +50,9 @@ public class PlayerController : NetworkBehaviour {
         float z = Input.GetAxis("Vertical") * Time.deltaTime * 3.0f;
         float y = Input.GetAxis("Mouse ScrollWheel") * Time.deltaTime * 100.0f;
 
+
+        gun.transform.Rotate(y, 0, 0);
         transform.Rotate(0, x, 0);
-        transform.Rotate(y,0,0);
         transform.Translate(0, 0, z);
 
         if(Input.GetKeyDown(KeyCode.Mouse0))
@@ -55,10 +60,7 @@ public class PlayerController : NetworkBehaviour {
             CmdFire();
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse2))
-        {
-            transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
-        }
+       
 
     }
 
